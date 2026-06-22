@@ -1,37 +1,45 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import {
-  FaGlobe, FaEnvelope, FaPhone, FaMobileAlt, FaBullseye, FaBuilding,
-  FaSchool, FaMapMarkerAlt, FaGraduationCap, FaInfoCircle, FaFlask,
-  FaAtom, FaClock, FaBrush, FaUsers, FaRupeeSign, FaHome, FaStar,
-  FaBriefcase, FaUserGraduate, FaAward, FaHands, FaMicroscope,
-  FaBookOpen, FaCertificate, FaChalkboardTeacher, FaCalendarAlt,
-  FaUniversity, FaRegBuilding, FaTools, FaHeart
+  FaGlobe, FaEnvelope, FaPhone, FaBuilding, FaSchool, FaMapMarkerAlt,
+  FaGraduationCap, FaFlask, FaAtom, FaClock, FaBrush, FaUsers, FaRupeeSign,
+  FaHome, FaStar, FaBriefcase, FaUserGraduate, FaAward, FaHands, FaMicroscope,
+  FaCertificate, FaChalkboardTeacher, FaUniversity, FaTools, FaArrowRight,
+  FaPlay, FaQuoteRight, FaCalendarCheck, FaShieldAlt, FaRocket, FaLightbulb,
+  FaNetworkWired, FaTree, FaBookReader, FaChevronDown, FaGem,
+  FaPalette, FaLeaf, FaCrown
 } from "react-icons/fa";
 
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+  FaInstagram,
+  FaYoutube,
+} from "react-icons/fa";
+
+// Import your images
 import image from './assets/images/unnamed.webp';
 import image1 from './assets/images/unnamed(1).webp';
 import image2 from './assets/images/unnamed(2).webp';
 import image3 from './assets/images/unnamed(3).webp';
 import image4 from './assets/images/unnamed(4).webp';
 
-
-// Placeholder images – replace with your actual imports
 const images = [image, image1, image2, image3, image4];
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Navbar scroll effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Intersection Observer for section titles & cards
   useEffect(() => {
+    // Observer for reveal elements
+    const revealEls = document.querySelectorAll(".reveal");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -40,29 +48,29 @@ function App() {
           }
         });
       },
-      { threshold: 0.25 }
+      { threshold: 0.15 }
     );
+    revealEls.forEach((el) => observer.observe(el));
 
-    document.querySelectorAll(".sec-title").forEach((el) => observer.observe(el));
-
-    // Card observer
+    // Observer for card-animate elements
     const cardObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const el = entry.target;
             const delay = parseFloat(el.style.animationDelay || 0) * 1000;
-            setTimeout(() => { el.style.opacity = "1"; }, delay);
+            setTimeout(() => {
+              el.style.opacity = "1";
+              el.classList.add("visible");
+            }, delay);
             cardObserver.unobserve(el);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
-    document.querySelectorAll(
-      ".ov-card, .step-item, .elig-card, .feature-card, .testimonial-card, .reel-img"
-    ).forEach((el) => {
+    document.querySelectorAll(".card-animate").forEach((el) => {
       el.style.opacity = "0";
       cardObserver.observe(el);
     });
@@ -74,23 +82,23 @@ function App() {
   }, []);
 
   return (
-    <div className="app-wrap">
+    <div className="app">
       {/* ===== NAVBAR ===== */}
       <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
-        <div className="nav-container">
+        <div className="container nav-container">
           <div className="logo">
-            <FaUniversity />
-            <span>NRLC <span className="highlight">Training</span></span>
+            <div className="logo-icon"><FaUniversity /></div>
+            <span style={{color:'white'}}>NRLC <span className="highlight">Institute</span></span>
           </div>
 
           <div className={`nav-links ${menuOpen ? "open" : ""}`}>
             <a href="#home" className="active">Home</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#overview">Overview</a>
-            <a href="#courses">Courses</a>
+            <a href="#programs">Programs</a>
+            <a href="#facilities">Facilities</a>
+            <a href="#about">About</a>
             <a href="#testimonials">Testimonials</a>
             <a href="#contact">Contact</a>
-            <a href="#apply" className="btn-nav">Apply Now</a>
+            <a href="#apply" className="btn-nav">Apply Now <FaArrowRight /></a>
           </div>
 
           <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
@@ -101,412 +109,302 @@ function App() {
 
       {/* ===== HERO ===== */}
       <section className="hero" id="home">
-        <div className="hero-bg-grid">
-          {images.map((img, i) => (
-            <div key={i} className="hero-bg-item">
-              <img src={img} alt="" />
-            </div>
-          ))}
+        <div className="hero-bg">
+          <div className="orb orb-1"></div>
+          <div className="orb orb-2"></div>
         </div>
-        <div className="hero-glow"></div>
-        <div className="hero-overlay"></div>
 
-        <div className="hero-content">
-          <div className="eyebrow">
-            <div className="eyebrow-pill">
-              <span className="eyebrow-dot"></span>
-              Ministry of Culture · Govt. of India
+        <div className="container hero-wrapper">
+          {/* Left Content */}
+          <div className="hero-content">
+            <div className="hero-badge">
+              <span className="dot"></span> Ministry of Culture · Govt. of India
+            </div>
+            <h1 className="hero-title">
+              <span className="line">Preserving Heritage,</span>
+              <span className="line highlight">Inspiring Excellence</span>
+            </h1>
+            <p className="hero-desc">
+              National Research Laboratory for Conservation — India's premier institution for
+              scientific heritage conservation, research, and advanced training.
+            </p>
+            <div className="hero-actions">
+              <button className="btn-primary"><FaGraduationCap /> Explore Programs</button>
+              <button className="btn-glass"><FaPlay /> Virtual Tour</button>
+            </div>
+            <div className="hero-stats">
+              <div className="stat-item"><span className="num">30+</span><span className="label">Years</span></div>
+              <div className="stat-item"><span className="num">500+</span><span className="label">Alumni</span></div>
+              <div className="stat-item"><span className="num">40</span><span className="label">Seats</span></div>
+              <div className="stat-item"><span className="num">₹1K</span><span className="label">Stipend</span></div>
             </div>
           </div>
 
-          <h1 className="hero-title">
-            NRLC <em>Training</em>
-            <span className="line2">Institute</span>
-          </h1>
-          <div className="hero-line animate"></div>
-
-          <p className="hero-sub">
-            National Research Laboratory for Conservation of Cultural Property — India's premier
-            institution for scientific heritage conservation, research, and advanced training.
-          </p>
-
-          <div className="hero-stats">
-            <div className="stat-item">
-              <span className="stat-num">30</span>
-              <span className="stat-lbl">Seats / Batch</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-num">6</span>
-              <span className="stat-lbl">Month Course</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-num">₹1K</span>
-              <span className="stat-lbl">Scholarship</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-num">40+</span>
-              <span className="stat-lbl">Years Legacy</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-num">500+</span>
-              <span className="stat-lbl">Alumni</span>
+          {/* Right Image */}
+          <div className="hero-image">
+            <div className="hero-image-wrapper">
+              <img src={images[0]} alt="NRLC Campus" />
+              <div className="hero-image-overlay"></div>
+              <div className="hero-image-badge">
+                <FaUniversity /> NRLC Campus
+              </div>
             </div>
           </div>
+        </div>
+        <div className="scroll-indicator"><FaChevronDown /></div>
+      </section>
 
-          <div className="hero-cta">
-            <button className="btn-primary">
-              <FaGraduationCap /> Apply Now
-            </button>
-            <button className="btn-secondary">
-              <FaInfoCircle /> Scholarship Info
-            </button>
+      {/* ===== PROGRAMS ===== */}
+      <section className="section programs" id="programs">
+        <div className="container">
+          <div className="section-header reveal">
+            <span className="tag">Flagship Program</span>
+            <h2 className="sec-title">Certificate Course in Conservation</h2>
+            <p className="subtitle">A comprehensive 6‑month program combining scientific methodology with hands‑on training</p>
           </div>
 
-          <div className="scroll-hint">
-            <i className="fas fa-chevron-down scroll-arrow"></i>
-            <span>Explore the institute</span>
+          <div className="programs-grid">
+            <div className="program-card primary card-animate" style={{ animationDelay: "0.05s" }}>
+              <div className="badge"><FaStar /> Flagship</div>
+              <h3>Six‑Month Certificate in Conservation of Cultural Property</h3>
+              <p>Rigorous training with limited seats for personalized guidance from expert conservators.</p>
+              <div className="features">
+                <span><FaUsers /> 30 Seats</span>
+                <span><FaRupeeSign /> ₹1,000 Stipend</span>
+                <span><FaHome /> Hostel Available</span>
+              </div>
+            </div>
+
+            <div className="program-card card-animate" style={{ animationDelay: "0.15s" }}>
+              <div className="icon"><FaFlask /></div>
+              <h4>Research Programs</h4>
+              <p>Advanced research in material analysis, dating, and restoration science.</p>
+              <a href="#" className="link">Explore <FaArrowRight /></a>
+            </div>
+
+            <div className="program-card card-animate" style={{ animationDelay: "0.25s" }}>
+              <div className="icon"><FaBookReader /></div>
+              <h4>Internship Opportunities</h4>
+              <p>Hands‑on experience with stipend support alongside the certificate course.</p>
+              <a href="#" className="link">Explore <FaArrowRight /></a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ===== BODY WRAP ===== */}
-      <div className="body-wrap">
+      {/* ===== FACILITIES ===== */}
+      <section className="section facilities" id="facilities">
+        <div className="container">
+          <div className="section-header reveal">
+            <span className="tag">Campus & Facilities</span>
+            <h2 className="sec-title">World‑Class Infrastructure</h2>
+          </div>
 
-        {/* GALLERY */}
-        <section className="section" id="gallery">
-          <div className="sec-eyebrow">Campus Gallery</div>
-          <div className="sec-title">Our Facilities</div>
-          <div className="campus-reel">
+          <div className="facilities-grid">
+            {[
+              { icon: FaMicroscope, title: "Advanced Labs", desc: "State‑of‑the‑art research laboratories" },
+              { icon: FaTree, title: "Green Campus", desc: "Eco‑friendly campus with lush greenery" },
+              { icon: FaBookReader, title: "Library", desc: "Extensive collection of conservation resources" },
+              { icon: FaUsers, title: "Hostel", desc: "Comfortable on‑campus accommodation" },
+            ].map((item, i) => (
+              <div key={i} className="facility-card card-animate" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
+                <div className="icon"><item.icon /></div>
+                <h4>{item.title}</h4>
+                <p>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="gallery-grid">
             {images.slice(0, 4).map((img, i) => (
-              <div key={i} className="reel-img" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
-                <img src={img} alt={`NRLC Campus ${i + 1}`} />
-                <div className="img-label">
-                  {["Main Campus", "Training Wing", "Jankipuram Centre", "Lab & Research"][i]}
+              <div key={i} className="gallery-item card-animate" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
+                <img src={img} alt="" />
+                <div className="overlay"><span>{["Research Lab", "Training Wing", "Campus View", "Conservation Lab"][i]}</span></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== ABOUT ===== */}
+      <section className="section about" id="about">
+        <div className="container about-wrapper">
+          <div className="about-content reveal">
+            <span className="tag">About NRLC</span>
+            <h2 className="sec-title">India's Premier Conservation Institute</h2>
+            <p className="about-text">
+              Established under the Ministry of Culture, NRLC has been at the forefront of
+              scientific heritage conservation for over three decades. Our mission is to preserve
+              India's rich cultural heritage through research, training, and innovation.
+            </p>
+            <div className="about-stats">
+              <div><span className="num">40+</span><span className="label">Years Legacy</span></div>
+              <div><span className="num">3</span><span className="label">Campuses</span></div>
+              <div><span className="num">1000+</span><span className="label">Projects</span></div>
+            </div>
+            <button className="btn-primary">Learn More About Us</button>
+          </div>
+
+          <div className="about-features">
+            {[
+              { icon: FaShieldAlt, title: "Government Recognition", desc: "Premier institution under Ministry of Culture" },
+              { icon: FaChalkboardTeacher, title: "Expert Faculty", desc: "Learn from experienced conservators" },
+              { icon: FaHands, title: "Hands‑on Training", desc: "Practical work with real artifacts" },
+              { icon: FaCertificate, title: "Industry Certification", desc: "Recognized certification for career advancement" },
+            ].map((item, i) => (
+              <div key={i} className="feature-block card-animate" style={{ animationDelay: `${0.05 + i * 0.1}s` }}>
+                <div className="icon"><item.icon /></div>
+                <div><h4>{item.title}</h4><p>{item.desc}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PROCESS ===== */}
+      <section className="section process">
+        <div className="container">
+          <div className="section-header reveal">
+            <span className="tag">How to Apply</span>
+            <h2 className="sec-title">Simple Application Process</h2>
+          </div>
+
+          <div className="process-grid">
+            {[
+              { num: "01", title: "Check Eligibility", desc: "Master's in Chemistry, Fine Arts, Archaeology, or Museology" },
+              { num: "02", title: "Download Form", desc: "Visit nrlc.gov.in or email trgnrlc@gmail.com" },
+              { num: "03", title: "Submit Documents", desc: "Attested degrees, experience letters, and passport photo" },
+              { num: "04", title: "Selection & Admission", desc: "Merit‑based selection with scholarship consideration" },
+            ].map((step, i) => (
+              <div key={i} className="process-step card-animate" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
+                <div className="num">{step.num}</div>
+                <h4>{step.title}</h4>
+                <p>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="eligibility-grid">
+            <div className="eligibility-card">
+              <FaUserGraduate />
+              <div><h4>In‑Service Candidates</h4><p>Chemists, conservators, and restorers in museums, archives, and heritage bodies</p></div>
+            </div>
+            <div className="eligibility-card">
+              <FaGraduationCap />
+              <div><h4>Fresh Graduates</h4><p>Master's in Chemistry, Fine Arts, Archaeology, or Museology</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== TESTIMONIALS ===== */}
+      <section className="section testimonials" id="testimonials">
+        <div className="container">
+          <div className="section-header reveal">
+            <span className="tag">Student Voices</span>
+            <h2 className="sec-title">What Our Alumni Say</h2>
+          </div>
+
+          <div className="testimonials-grid">
+            {[
+              { name: "Dr. Ananya Sharma", role: "Senior Conservator, National Museum", text: "The NRLC training program transformed my career. The hands‑on experience with real artifacts and expert guidance is unmatched." },
+              { name: "Rahul Verma", role: "Restoration Specialist, ASI", text: "The scientific approach to conservation taught at NRLC gave me a solid foundation. I recommend this course to every aspiring conservator." },
+              { name: "Priya Patel", role: "Alumna, Batch 2024", text: "The scholarship and stipend support made this world‑class training accessible. The hostel facilities and campus environment are excellent." },
+            ].map((item, i) => (
+              <div key={i} className="testimonial-block card-animate" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
+                <FaQuoteRight className="quote-icon" />
+                <p className="text">{item.text}</p>
+                <div className="author">
+                  <div className="avatar">{item.name[0]}</div>
+                  <div><div className="name">{item.name}</div><div className="role">{item.role}</div></div>
                 </div>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* OVERVIEW */}
-        <section className="section" id="overview">
-          <div className="sec-eyebrow">Institute Overview</div>
-          <div className="sec-title">Key Information</div>
-          <div className="overview-cards">
-            <div className="ov-card" style={{ animationDelay: "0.05s" }}>
-              <div className="ov-icon"><FaBullseye /></div>
-              <div className="ov-lbl">Primary Mandate</div>
-              <div className="ov-val">Research, dating, material analysis & conservation training</div>
-            </div>
-            <div className="ov-card" style={{ animationDelay: "0.15s" }}>
-              <div className="ov-icon"><FaBuilding /></div>
-              <div className="ov-lbl">Headquarters</div>
-              <div className="ov-val">Aliganj Scheme, Lucknow 226024, U.P.</div>
-            </div>
-            <div className="ov-card" style={{ animationDelay: "0.25s" }}>
-              <div className="ov-icon"><FaSchool /></div>
-              <div className="ov-lbl">Training Campus</div>
-              <div className="ov-val">Sahara States Rd, Jankipuram, Lucknow 226021</div>
-            </div>
-            <div className="ov-card" style={{ animationDelay: "0.35s" }}>
-              <div className="ov-icon"><FaMapMarkerAlt /></div>
-              <div className="ov-lbl">Regional Centre</div>
-              <div className="ov-val">Regional Conservation Laboratory, Mysuru</div>
-            </div>
-          </div>
-
-          <div className="tags-row">
-            <span className="tag-chip"><FaFlask /> Environmental Archaeology</span>
-            <span className="tag-chip"><FaAtom /> Material Analysis</span>
-            <span className="tag-chip"><FaClock /> Artifact Dating</span>
-            <span className="tag-chip"><FaBrush /> Restoration Science</span>
-            <span className="tag-chip"><FaMicroscope /> Scientific Research</span>
-            <span className="tag-chip"><FaTools /> Conservation Techniques</span>
-          </div>
-        </section>
-
-        {/* FEATURES */}
-        <section className="section">
-          <div className="sec-eyebrow">Why Choose NRLC</div>
-          <div className="sec-title">Institute Highlights</div>
-          <div className="features-grid">
-            <div className="feature-card" style={{ animationDelay: "0.05s" }}>
-              <div className="feature-icon"><FaAward /></div>
-              <h3>Government Recognition</h3>
-              <p>Premier institution under the Ministry of Culture, Government of India</p>
-            </div>
-            <div className="feature-card" style={{ animationDelay: "0.15s" }}>
-              <div className="feature-icon"><FaChalkboardTeacher /></div>
-              <h3>Expert Faculty</h3>
-              <p>Learn from experienced conservators and research scientists</p>
-            </div>
-            <div className="feature-card" style={{ animationDelay: "0.25s" }}>
-              <div className="feature-icon"><FaHands /></div>
-              <h3>Hands-on Training</h3>
-              <p>Practical laboratory work with real artifacts and materials</p>
-            </div>
-            <div className="feature-card" style={{ animationDelay: "0.35s" }}>
-              <div className="feature-icon"><FaCertificate /></div>
-              <h3>Industry Certification</h3>
-              <p>Recognized certification for career advancement in heritage conservation</p>
-            </div>
-          </div>
-        </section>
-
-        {/* COURSES */}
-        <section className="section" id="courses">
-          <div className="sec-eyebrow">Flagship Program</div>
-          <div className="sec-title">Certificate Course</div>
-
-          <div className="flagship">
-            <div className="flagship-shimmer"></div>
-            <div className="flagship-badge"><FaStar /> Flagship</div>
-            <div className="flagship-title">Six-Month Certificate in<br />Conservation of Cultural Property</div>
-            <div className="flagship-desc">
-              A rigorous, structured program combining scientific methodology with hands-on
-              laboratory training. Limited to 30 seats per batch to ensure personalised guidance
-              from expert conservators and researchers.
-            </div>
-            <div className="perks-row">
-              <div className="perk">
-                <FaUsers />
-                <div className="perk-v">30</div>
-                <div className="perk-l">Seats / Batch</div>
-              </div>
-              <div className="perk">
-                <FaRupeeSign />
-                <div className="perk-v">₹1,000</div>
-                <div className="perk-l">Monthly Scholarship</div>
-              </div>
-              <div className="perk">
-                <FaHome />
-                <div className="perk-v">Hostel</div>
-                <div className="perk-l">On Campus</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="sec-eyebrow" style={{ marginTop: "1.5rem" }}>Application Journey</div>
-          <div className="sec-title">How to Apply</div>
-          <div className="process-steps">
-            <div className="step-item" style={{ animationDelay: "0.1s" }}>
-              <div className="step-num">1</div>
-              <div className="step-body">
-                <div className="step-title">Check Eligibility</div>
-                <div className="step-desc">Master's in Chemistry, Fine Arts, Archaeology, or Museology accepted.</div>
-              </div>
-            </div>
-            <div className="step-item" style={{ animationDelay: "0.2s" }}>
-              <div className="step-num">2</div>
-              <div className="step-body">
-                <div className="step-title">Download Application Form</div>
-                <div className="step-desc">Visit nrlc.gov.in or write to trgnrlc@gmail.com</div>
-              </div>
-            </div>
-            <div className="step-item" style={{ animationDelay: "0.3s" }}>
-              <div className="step-num">3</div>
-              <div className="step-body">
-                <div className="step-title">Submit Documents</div>
-                <div className="step-desc">Attested degrees, experience letters, and passport photo.</div>
-              </div>
-            </div>
-            <div className="step-item" style={{ animationDelay: "0.4s" }}>
-              <div className="step-num">4</div>
-              <div className="step-body">
-                <div className="step-title">Selection & Admission</div>
-                <div className="step-desc">Merit-based selection with scholarship consideration.</div>
-              </div>
-
-              
-            </div>
-          </div>
-        </section>
-
-        {/* ELIGIBILITY */}
-        <section className="section">
-          <div className="sec-eyebrow">Admissions</div>
-          <div className="sec-title">Eligibility Criteria</div>
-          <div className="elig-grid">
-            <div className="elig-card">
-              <div className="elig-head">
-                <FaBriefcase />
-                <span>In-Service Candidates</span>
-              </div>
-              <ul>
-                <li>Chemists working in museums</li>
-                <li>Conservators in archives or libraries</li>
-                <li>Restorers in registered heritage bodies</li>
-              </ul>
-            </div>
-            <div className="elig-card">
-              <div className="elig-head">
-                <FaUserGraduate />
-                <span>Fresh Graduates</span>
-              </div>
-              <ul>
-                <li>Master's in Chemistry or Fine Arts</li>
-                <li>M.A. in Archaeology or Museology</li>
-                <li>PG Diploma — Archaeology & Museology</li>
-              </ul>
-            </div>
-          </div>
-          <div className="note-box">
-            <strong>Note:</strong> Internship opportunities with stipend support are also available alongside the certificate course.
-          </div>
-        </section>
-
-        {/* TESTIMONIALS */}
-        <section className="section" id="testimonials">
-          <div className="sec-eyebrow">Student Voices</div>
-          <div className="sec-title">What Our Alumni Say</div>
-          <div className="testimonials-grid">
-            <div className="testimonial-card" style={{ animationDelay: "0.1s" }}>
-              <div className="testimonial-quote">"</div>
-              <p className="testimonial-text">
-                The NRLC training program transformed my career. The hands-on experience with real artifacts
-                and expert guidance is unmatched.
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar">A</div>
-                <div>
-                  <div className="author-name">Dr. Ananya Sharma</div>
-                  <div className="author-role">Senior Conservator, National Museum</div>
+      {/* ===== CONTACT ===== */}
+      <section className="section contact" id="contact">
+        <div className="container contact-wrapper">
+          <div className="contact-info reveal">
+            <span className="tag">Get in Touch</span>
+            <h2 className="sec-title">Contact Us</h2>
+            <p className="contact-text">Have questions about admissions or programs? Reach out to us.</p>
+            <div className="contact-details">
+              {[
+                { icon: FaMapMarkerAlt, label: "Address", value: "Sector-E/3, Aliganj Scheme, Lucknow 226024" },
+                { icon: FaPhone, label: "Phone", value: "0522-273 5313" },
+                { icon: FaEnvelope, label: "Email", value: "trgnrlc@gmail.com", link: "mailto:trgnrlc@gmail.com" },
+                { icon: FaGlobe, label: "Website", value: "nrlc.gov.in", link: "https://nrlc.gov.in" },
+              ].map((item, i) => (
+                <div key={i} className="contact-item">
+                  <div className="icon"><item.icon /></div>
+                  <div><div className="label">{item.label}</div><div className="value">{item.link ? <a href={item.link}>{item.value}</a> : item.value}</div></div>
                 </div>
-              </div>
-            </div>
-            <div className="testimonial-card" style={{ animationDelay: "0.2s" }}>
-              <div className="testimonial-quote">"</div>
-              <p className="testimonial-text">
-                The scientific approach to conservation taught at NRLC gave me a solid foundation.
-                I recommend this course to every aspiring conservator.
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar">R</div>
-                <div>
-                  <div className="author-name">Rahul Verma</div>
-                  <div className="author-role">Restoration Specialist, ASI</div>
-                </div>
-              </div>
-            </div>
-            <div className="testimonial-card" style={{ animationDelay: "0.3s" }}>
-              <div className="testimonial-quote">"</div>
-              <p className="testimonial-text">
-                The scholarship and stipend support made this world-class training accessible.
-                The hostel facilities and campus environment are excellent.
-              </p>
-              <div className="testimonial-author">
-                <div className="author-avatar">P</div>
-                <div>
-                  <div className="author-name">Priya Patel</div>
-                  <div className="author-role">Alumna, Batch 2024</div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
-        </section>
 
-        {/* CONTACT */}
-        <section className="section" id="contact">
-          <div className="sec-eyebrow">Get in Touch</div>
-          <div className="sec-title">Contact Us</div>
-          <div className="contact-dark">
-            <div className="ct-title">Admissions & Academic Queries</div>
-            <div className="ct-grid">
-              <div className="ct-item">
-                <div className="ct-icon"><FaGlobe /></div>
-                <div>
-                  <div className="ct-lbl">Website</div>
-                  <div className="ct-val">
-                    <a href="https://nrlc.gov.in" target="_blank" rel="noopener noreferrer">nrlc.gov.in</a>
-                  </div>
-                </div>
-              </div>
-              <div className="ct-item">
-                <div className="ct-icon"><FaEnvelope /></div>
-                <div>
-                  <div className="ct-lbl">Email</div>
-                  <div className="ct-val"><a href="mailto:trgnrlc@gmail.com">trgnrlc@gmail.com</a></div>
-                </div>
-              </div>
-              <div className="ct-item">
-                <div className="ct-icon"><FaPhone /></div>
-                <div>
-                  <div className="ct-lbl">Jankipuram Campus</div>
-                  <div className="ct-val">0522-273 5313</div>
-                </div>
-              </div>
-              <div className="ct-item">
-                <div className="ct-icon"><FaMobileAlt /></div>
-                <div>
-                  <div className="ct-lbl">Training Coordinator</div>
-                  <div className="ct-val">9450418423</div>
-                </div>
-              </div>
-            </div>
+          <div className="contact-form card-animate" style={{ animationDelay: "0.2s" }}>
+            <h3>Send a Message</h3>
+            <form>
+              <input type="text" placeholder="Your Name" />
+              <input type="email" placeholder="Your Email" />
+              <textarea placeholder="Your Message" rows="4"></textarea>
+              <button type="submit" className="btn-primary">Send Message <FaArrowRight /></button>
+            </form>
           </div>
-        </section>
-
-      </div>
+        </div>
+      </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="footer-strip">
-        <div className="footer-grid">
-          <div className="footer-col">
-            <div className="footer-logo">NRLC <span>Training</span></div>
-            <div className="footer-sub">Ministry of Culture, Government of India</div>
-            <div className="footer-address">
-              <p><FaMapMarkerAlt className="footer-icon" /> Sector-E/3, Aliganj Scheme, Lucknow 226024</p>
-              <p><FaPhone className="footer-icon" /> 0522-273 5313 (Jankipuram Campus)</p>
-              <p><FaEnvelope className="footer-icon" /> <a href="mailto:trgnrlc@gmail.com">trgnrlc@gmail.com</a></p>
-              <p><FaGlobe className="footer-icon" /> <a href="https://nrlc.gov.in" target="_blank" rel="noopener noreferrer">nrlc.gov.in</a></p>
+      <footer className="footer">
+        <div className="container footer-content">
+          <div className="footer-brand">
+            <div className="logo">NRLC <span>Institute</span></div>
+            <p>Preserving India's cultural heritage through scientific conservation and research.</p>
+            {/* <div className="social">
+              <a href="#"><i className="fab fa-facebook-f"></i></a>
+              <a href="#"><i className="fab fa-twitter"></i></a>
+              <a href="#"><i className="fab fa-linkedin-in"></i></a>
+              <a href="#"><i className="fab fa-instagram"></i></a>
+              <a href="#"><i className="fab fa-youtube"></i></a>
+            </div> */}
+
+            <div className="social">
+              <a href="#" aria-label="Facebook">
+                <FaFacebookF />
+              </a>
+
+              <a href="#" aria-label="Twitter">
+                <FaTwitter />
+              </a>
+
+              <a href="#" aria-label="LinkedIn">
+                <FaLinkedinIn />
+              </a>
+
+              <a href="#" aria-label="Instagram">
+                <FaInstagram />
+              </a>
+
+              <a href="#" aria-label="YouTube">
+                <FaYoutube />
+              </a>
             </div>
           </div>
-
-          <div className="footer-col">
-            <h4>Quick Links</h4>
-            <ul className="footer-links">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#gallery">Gallery</a></li>
-              <li><a href="#overview">About Us</a></li>
-              <li><a href="#courses">Courses</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li><a href="#apply">Apply Now</a></li>
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h4>Programs</h4>
-            <ul className="footer-links">
-              <li><a href="#courses">Certificate Course</a></li>
-              <li><a href="#courses">Conservation Training</a></li>
-              <li><a href="#courses">Research Programs</a></li>
-              <li><a href="#courses">Internship Opportunities</a></li>
-              <li><a href="#courses">Scholarship Programs</a></li>
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h4>Resources</h4>
-            <ul className="footer-links">
-              <li><a href="#">Student Handbook</a></li>
-              <li><a href="#">Application Form</a></li>
-              <li><a href="#">Academic Calendar</a></li>
-              <li><a href="#">FAQs</a></li>
-              <li><a href="#">Terms & Conditions</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
+          <div className="footer-links">
+            <div><h4>Quick Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#programs">Programs</a></li><li><a href="#facilities">Facilities</a></li><li><a href="#about">About</a></li></ul></div>
+            <div><h4>Programs</h4><ul><li><a href="#programs">Certificate Course</a></li><li><a href="#programs">Research</a></li><li><a href="#programs">Internships</a></li><li><a href="#programs">Workshops</a></li></ul></div>
+            <div><h4>Resources</h4><ul><li><a href="#">Student Handbook</a></li><li><a href="#">Application Form</a></li><li><a href="#">Academic Calendar</a></li><li><a href="#">FAQs</a></li></ul></div>
           </div>
         </div>
-
         <div className="footer-bottom">
-         
-          <div  className="footer-copyright">
-            <p>&copy; 2025 NRLC Training Institute. All rights reserved.</p>
-            <p className="footer-credit">Designed with <span className="footer-heart">❤</span> for heritage</p>
-          </div>
+          <p>&copy; 2025 NRLC Training Institute. All rights reserved.</p>
+          <p>Made with <span className="heart">❤</span> for heritage</p>
         </div>
       </footer>
-
     </div>
   );
 }
