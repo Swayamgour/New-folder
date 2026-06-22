@@ -334,7 +334,7 @@ function App() {
 
           <div className="testimonials-grid">
             {[
-              { name: "Dr. Ananya Sharma", role: "Senior Conservator, National Museum", text: "The NRLC training program transformed my career. The hands‑on experience with real artifacts and expert guidance is unmatched." },
+              { name: "Dr. Ananya Sharma", role: "Senior Conservator, National Museum", text: "The NRLC training program transformed my career. The hands‑on experience with real artifacts and expert real artifacts guidance is unmatched." },
               { name: "Rahul Verma", role: "Restoration Specialist, ASI", text: "The scientific approach to conservation taught at NRLC gave me a solid foundation. I recommend this course to every aspiring conservator." },
               { name: "Priya Patel", role: "Alumna, Batch 2024", text: "The scholarship and stipend support made this world‑class training accessible. The hostel facilities and campus environment are excellent." },
             ].map((item, i) => (
