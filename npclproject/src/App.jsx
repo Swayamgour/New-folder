@@ -7,7 +7,7 @@ import {
   FaCertificate, FaChalkboardTeacher, FaUniversity, FaTools, FaArrowRight,
   FaPlay, FaQuoteRight, FaCalendarCheck, FaShieldAlt, FaRocket, FaLightbulb,
   FaNetworkWired, FaTree, FaBookReader, FaChevronDown, FaGem,
-  FaPalette, FaLeaf, FaCrown
+  FaPalette, FaLeaf, FaCrown, FaPause
 } from "react-icons/fa";
 
 import {
@@ -25,11 +25,15 @@ import image2 from './assets/images/unnamed(2).webp';
 import image3 from './assets/images/unnamed(3).webp';
 import image4 from './assets/images/unnamed(4).webp';
 
+// Import your video
+import heroVideo from './assets/images/2.mp4'; // Add your video file here
+
 const images = [image, image1, image2, image3, image4];
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -81,6 +85,18 @@ function App() {
     };
   }, []);
 
+  const toggleVideo = () => {
+    const video = document.getElementById('heroVideo');
+    if (video) {
+      if (isVideoPlaying) {
+        video.pause();
+      } else {
+        video.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
   return (
     <div className="app">
       {/* ===== NAVBAR ===== */}
@@ -88,7 +104,7 @@ function App() {
         <div className="container nav-container">
           <div className="logo">
             <div className="logo-icon"><FaUniversity /></div>
-            <span style={{color:'white'}}>NRLC <span className="highlight">Institute</span></span>
+            <span style={{ color: 'white' }}>NRLC <span className="highlight">Institute</span></span>
           </div>
 
           <div className={`nav-links ${menuOpen ? "open" : ""}`}>
@@ -109,9 +125,28 @@ function App() {
 
       {/* ===== HERO ===== */}
       <section className="hero" id="home">
-        <div className="hero-bg">
+        {/* Background Video */}
+        <div className="hero-video-container">
+          <video
+            id="heroVideo"
+            className="hero-video"
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={images[0]}
+          >
+            <source src={heroVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="hero-video-overlay"></div>
           <div className="orb orb-1"></div>
           <div className="orb orb-2"></div>
+
+          {/* Video Controls */}
+          <button className="video-control-btn" onClick={toggleVideo}>
+            {isVideoPlaying ? <FaPause /> : <FaPlay />}
+          </button>
         </div>
 
         <div className="container hero-wrapper">
@@ -141,15 +176,7 @@ function App() {
           </div>
 
           {/* Right Image */}
-          <div className="hero-image">
-            <div className="hero-image-wrapper">
-              <img src={images[0]} alt="NRLC Campus" />
-              <div className="hero-image-overlay"></div>
-              <div className="hero-image-badge">
-                <FaUniversity /> NRLC Campus
-              </div>
-            </div>
-          </div>
+
         </div>
         <div className="scroll-indicator"><FaChevronDown /></div>
       </section>
@@ -364,14 +391,6 @@ function App() {
           <div className="footer-brand">
             <div className="logo">NRLC <span>Institute</span></div>
             <p>Preserving India's cultural heritage through scientific conservation and research.</p>
-            {/* <div className="social">
-              <a href="#"><i className="fab fa-facebook-f"></i></a>
-              <a href="#"><i className="fab fa-twitter"></i></a>
-              <a href="#"><i className="fab fa-linkedin-in"></i></a>
-              <a href="#"><i className="fab fa-instagram"></i></a>
-              <a href="#"><i className="fab fa-youtube"></i></a>
-            </div> */}
-
             <div className="social">
               <a href="#" aria-label="Facebook">
                 <FaFacebookF />

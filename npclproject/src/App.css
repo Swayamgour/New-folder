@@ -211,7 +211,7 @@ html {
 /* ----- HERO ----- */
 .hero {
   position: relative;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -442,7 +442,7 @@ html {
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
   font-weight: 700;
-  color: #4fc3f7;
+  color: white;
   display: block;
 }
 
@@ -1385,7 +1385,7 @@ html {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr ;
   gap: 4rem;
   align-items: center;
   padding: 6rem 0 2rem;
@@ -1587,5 +1587,81 @@ html {
     padding: 8px 14px;
     bottom: 12px;
     left: 12px;
+  }
+}
+
+/* Add these styles for the hero video background */
+
+/* ----- HERO VIDEO BACKGROUND ----- */
+.hero-video-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10, 14, 26, 0.85) 0%, rgba(10, 14, 26, 0.4) 70%, rgba(0, 20, 40, 0.3) 100%);
+  z-index: 1;
+}
+
+.video-control-btn {
+  position: absolute;
+  bottom: 100px;
+  right: 40px;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.video-control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+  border-color: rgba(0, 180, 216, 0.4);
+}
+
+/* Update hero-orb z-index */
+.orb {
+  z-index: 1;
+}
+
+/* Update hero-wrapper z-index */
+.hero-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .video-control-btn {
+    bottom: 80px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
   }
 }
