@@ -419,10 +419,10 @@ function App() {
             <div><h4>Resources</h4><ul><li><a href="#">Student Handbook</a></li><li><a href="#">Application Form</a></li><li><a href="#">Academic Calendar</a></li><li><a href="#">FAQs</a></li></ul></div>
           </div>
         </div>
-        <div className="footer-bottom">
+        {/* <div className="footer-bottom">
           <p>&copy; 2025 NRLC Training Institute. All rights reserved.</p>
           <p>Made with <span className="heart">❤</span> for heritage</p>
-        </div>
+        </div> */}
       </footer>
     </div>
   );
