@@ -104,7 +104,7 @@ function App() {
         <div className="container nav-container">
           <div className="logo">
             <div className="logo-icon"><FaUniversity /></div>
-            <span style={{ color: 'white' }}>NRLC <span className="highlight">Institute</span></span>
+            <span >NRLC <span className="highlight">Institute</span></span>
           </div>
 
           <div className={`nav-links ${menuOpen ? "open" : ""}`}>
